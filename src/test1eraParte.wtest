@@ -1,0 +1,35 @@
+import vendedores.*
+import ciudades.*
+
+describe "test primera parte"{
+	var cordoba = new Provincia(cantPoblacion=100000)
+	var ciudad1 = new Ciudad(nombre="cordoba",estaEnProvincia = cordoba)
+
+	var vendedorFijo1 = new VendedorFijo(ciudadVive= ciudad1) 
+	var vendedorViajero1 = new VendedorViajante()
+	var ComercioCorresponsal = new ComercioCorresponsal()
+	
+	method initialize(){
+		vendedorViajero1.agregarProvincia(cordoba)
+		ComercioCorresponsal.agregarSucursal(ciudad1)
+		
+		vendedorFijo1.agregarCertificacion(new Certificacion(esDeProducto = true,creditosQueOtorga=10))
+		vendedorFijo1.agregarCertificacion(new Certificacion(esDeProducto = false,creditosQueOtorga=10))
+		vendedorFijo1.agregarCertificacion(new Certificacion(esDeProducto = true,creditosQueOtorga=100))
+		
+	}
+	
+	test "puede trabajar"{
+		assert.that(vendedorFijo1.puedeTrabajar(ciudad1))
+		assert.that(vendedorViajero1.puedeTrabajar(ciudad1))
+		assert.that(ComercioCorresponsal.puedeTrabajar(ciudad1))
+	}
+	
+	test "es versatil"{
+		assert.that(vendedorFijo1.esVersatil())
+	}
+	
+	test "es firme"{
+		assert.that(vendedorFijo1.esFirme())
+	}
+}
